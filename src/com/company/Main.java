@@ -7,7 +7,7 @@ private static class PrimosEntreSi extends Exception{
 
 }
 
-    public static void main(String[] args)throws PrimosEntreSi {
+    public static void main(String[] args) throws PrimosEntreSi, InterruptedException {
         // write your code here
         int a = 0;
         int b = 0;
@@ -38,9 +38,20 @@ private static class PrimosEntreSi extends Exception{
                 }
             }
            // try {
-              //  System.out.println("Las baldosas deberán medir  " + BuscaMCD(a, b));
-                System.out.println("Las baldosas deberán medir  "+calcularCuerda(a,b));
-                int medidaBaldosa = BuscaMCD(a,b);
+            long inicio = System.currentTimeMillis();
+            Thread.sleep(2000);
+                System.out.println("Las baldosas deberán medir  " + BuscaMCD(a, b));
+                long fin= System.currentTimeMillis();
+                double tiempo = (double) ((fin-inicio/1000));
+            System.out.println("MCD tarda "+tiempo+" segundos");
+
+            long inicio2=System.currentTimeMillis();
+            Thread.sleep(2000);
+               System.out.println("Las baldosas deberán medir  "+calcularCuerda(a,b));
+              long fin2=System.currentTimeMillis();
+            double tiempo2 = (double) ((fin2-inicio2/1000));
+            System.out.println("Con recursividad tarda "+tiempo2+" segundos");
+                long medidaBaldosa = BuscaMCD(a,b);
                 System.out.println("Por lo tanto haran falta "+ CalcularBaldosas(medidaBaldosa,a,b) + " baldosas");
                 correcto=true;
          /*   } catch (PrimosEntreSi e) {
@@ -50,14 +61,14 @@ private static class PrimosEntreSi extends Exception{
         }
     }
 
-    private static int CalcularBaldosas(int medidaBaldosa, int a, int b) {
-        int baldosasTotal = (a/medidaBaldosa) * ( b/medidaBaldosa);
+    private static long CalcularBaldosas(long medidaBaldosa, int a, int b) {
+        long baldosasTotal = (a/medidaBaldosa) * ( b/medidaBaldosa);
         return baldosasTotal;
     }
 
-    private static int BuscaMCD(int a, int b) /*throws PrimosEntreSi*/ {
+    private static long BuscaMCD(int a, int b) /*throws PrimosEntreSi*/ {
         int contador = 1;
-        int mcd = 0;
+        long mcd = 0;
         if (a > b) {
             while (contador <= b) {
                 if ((a % contador) == 0 && (b % contador) == 0) {
@@ -79,7 +90,7 @@ private static class PrimosEntreSi extends Exception{
         return mcd;
     }
 
-    public static int calcularCuerda(int a, int b){
+    public static long calcularCuerda(int a, int b){
     if (a==b) return a;
     if (a>b)  {return calcularCuerda(a-b , b);}
     else {return calcularCuerda(a,b-a);}
